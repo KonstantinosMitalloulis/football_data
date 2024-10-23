@@ -1,0 +1,24 @@
+[2024-10-09T11:08:11.869+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-10-09T11:08:11.945+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: update_database.run_sofascore_scraper manual__2024-10-09T11:07:56.681774+00:00 [queued]>
+[2024-10-09T11:08:11.975+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: update_database.run_sofascore_scraper manual__2024-10-09T11:07:56.681774+00:00 [queued]>
+[2024-10-09T11:08:11.977+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-10-09T11:08:12.013+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): run_sofascore_scraper> on 2024-10-09 11:07:56.681774+00:00
+[2024-10-09T11:08:12.024+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=80) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-10-09T11:08:12.027+0000] {standard_task_runner.py:63} INFO - Started process 82 to run task
+[2024-10-09T11:08:12.027+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'update_database', 'run_sofascore_scraper', 'manual__2024-10-09T11:07:56.681774+00:00', '--job-id', '3860', '--raw', '--subdir', 'DAGS_FOLDER/update.py', '--cfg-path', '/tmp/tmpuewe1rz7']
+[2024-10-09T11:08:12.029+0000] {standard_task_runner.py:91} INFO - Job 3860: Subtask run_sofascore_scraper
+[2024-10-09T11:08:12.103+0000] {task_command.py:426} INFO - Running <TaskInstance: update_database.run_sofascore_scraper manual__2024-10-09T11:07:56.681774+00:00 [running]> on host 512b8b1d19ac
+[2024-10-09T11:08:12.250+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='update_database' AIRFLOW_CTX_TASK_ID='run_sofascore_scraper' AIRFLOW_CTX_EXECUTION_DATE='2024-10-09T11:07:56.681774+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-10-09T11:07:56.681774+00:00'
+[2024-10-09T11:08:12.252+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-10-09T11:08:12.253+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2024-10-09T11:08:12.254+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'docker run -d --name sofascore_scraper_container -v /opt/***/dags/sofascore_scraper_container/csv:/app/csv kostasmitalloulis/sofascore_scraper_image:latest ']
+[2024-10-09T11:08:12.269+0000] {subprocess.py:86} INFO - Output:
+[2024-10-09T11:08:12.629+0000] {subprocess.py:93} INFO - fdee5b97db0f67de379f337d57fad5d771c3ac9398942ee11e26427a45ca8897
+[2024-10-09T11:08:13.563+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2024-10-09T11:08:13.568+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-10-09T11:08:13.643+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=update_database, task_id=run_sofascore_scraper, run_id=manual__2024-10-09T11:07:56.681774+00:00, execution_date=20241009T110756, start_date=20241009T110811, end_date=20241009T110813
+[2024-10-09T11:08:13.694+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2024-10-09T11:08:13.732+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-10-09T11:08:13.736+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

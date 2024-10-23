@@ -1,0 +1,56 @@
+[2024-09-27T12:18:53.466+0000] {processor.py:161} INFO - Started process (PID=11813) to work on /opt/airflow/dags/scotland_premier/initialization.py
+[2024-09-27T12:18:53.468+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scotland_premier/initialization.py for tasks to queue
+[2024-09-27T12:18:53.469+0000] {logging_mixin.py:188} INFO - [2024-09-27T12:18:53.469+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/scotland_premier/initialization.py
+[2024-09-27T12:18:54.061+0000] {logging_mixin.py:188} INFO - [2024-09-27T12:18:54.053+0000] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/scotland_premier/initialization.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/scotland_premier/initialization.py", line 13, in <module>
+    from dag_function_helpers.first_load.all_sources_merged_transformed_fl import all_sources_merged_transformed_fl
+ModuleNotFoundError: No module named 'dag_function_helpers'
+[2024-09-27T12:18:54.067+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scotland_premier/initialization.py
+[2024-09-27T12:18:54.109+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scotland_premier/initialization.py took 0.651 seconds
+[2024-09-27T12:19:24.861+0000] {processor.py:161} INFO - Started process (PID=11873) to work on /opt/airflow/dags/scotland_premier/initialization.py
+[2024-09-27T12:19:24.872+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scotland_premier/initialization.py for tasks to queue
+[2024-09-27T12:19:24.881+0000] {logging_mixin.py:188} INFO - [2024-09-27T12:19:24.877+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/scotland_premier/initialization.py
+[2024-09-27T12:19:25.784+0000] {logging_mixin.py:188} INFO - [2024-09-27T12:19:25.772+0000] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/scotland_premier/initialization.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/scotland_premier/initialization.py", line 13, in <module>
+    from dag_function_helpers.first_load.all_sources_merged_transformed_fl import all_sources_merged_transformed_fl
+ModuleNotFoundError: No module named 'dag_function_helpers'
+[2024-09-27T12:19:25.789+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scotland_premier/initialization.py
+[2024-09-27T12:19:25.831+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scotland_premier/initialization.py took 1.030 seconds
+[2024-09-27T12:19:56.490+0000] {processor.py:161} INFO - Started process (PID=11933) to work on /opt/airflow/dags/scotland_premier/initialization.py
+[2024-09-27T12:19:56.492+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scotland_premier/initialization.py for tasks to queue
+[2024-09-27T12:19:56.494+0000] {logging_mixin.py:188} INFO - [2024-09-27T12:19:56.493+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/scotland_premier/initialization.py
+[2024-09-27T12:19:57.073+0000] {logging_mixin.py:188} INFO - [2024-09-27T12:19:57.063+0000] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/scotland_premier/initialization.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/scotland_premier/initialization.py", line 13, in <module>
+    from dag_function_helpers.first_load.all_sources_merged_transformed_fl import all_sources_merged_transformed_fl
+ModuleNotFoundError: No module named 'dag_function_helpers'
+[2024-09-27T12:19:57.075+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scotland_premier/initialization.py
+[2024-09-27T12:19:57.107+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scotland_premier/initialization.py took 0.626 seconds
+[2024-09-27T12:20:27.332+0000] {processor.py:161} INFO - Started process (PID=11996) to work on /opt/airflow/dags/scotland_premier/initialization.py
+[2024-09-27T12:20:27.334+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scotland_premier/initialization.py for tasks to queue
+[2024-09-27T12:20:27.335+0000] {logging_mixin.py:188} INFO - [2024-09-27T12:20:27.335+0000] {dagbag.py:545} INFO - Filling up the DagBag from /opt/airflow/dags/scotland_premier/initialization.py
+[2024-09-27T12:20:27.840+0000] {logging_mixin.py:188} INFO - [2024-09-27T12:20:27.832+0000] {dagbag.py:355} ERROR - Failed to import: /opt/airflow/dags/scotland_premier/initialization.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/dagbag.py", line 351, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/opt/airflow/dags/scotland_premier/initialization.py", line 13, in <module>
+    from dag_function_helpers.first_load.all_sources_merged_transformed_fl import all_sources_merged_transformed_fl
+ModuleNotFoundError: No module named 'dag_function_helpers'
+[2024-09-27T12:20:27.843+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scotland_premier/initialization.py
+[2024-09-27T12:20:27.866+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scotland_premier/initialization.py took 0.543 seconds

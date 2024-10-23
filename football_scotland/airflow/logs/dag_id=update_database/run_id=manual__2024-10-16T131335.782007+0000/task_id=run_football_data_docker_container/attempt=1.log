@@ -1,0 +1,21 @@
+[2024-10-16T14:26:25.384+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-10-16T14:26:25.431+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: update_database.run_football_data_docker_container manual__2024-10-16T13:13:35.782007+00:00 [queued]>
+[2024-10-16T14:26:25.448+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: update_database.run_football_data_docker_container manual__2024-10-16T13:13:35.782007+00:00 [queued]>
+[2024-10-16T14:26:25.449+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-10-16T14:26:25.476+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): run_football_data_docker_container> on 2024-10-16 13:13:35.782007+00:00
+[2024-10-16T14:26:25.487+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=1009) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-10-16T14:26:25.489+0000] {standard_task_runner.py:63} INFO - Started process 1011 to run task
+[2024-10-16T14:26:25.489+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'update_database', 'run_football_data_docker_container', 'manual__2024-10-16T13:13:35.782007+00:00', '--job-id', '3890', '--raw', '--subdir', 'DAGS_FOLDER/update.py', '--cfg-path', '/tmp/tmp63mm5van']
+[2024-10-16T14:26:25.491+0000] {standard_task_runner.py:91} INFO - Job 3890: Subtask run_football_data_docker_container
+[2024-10-16T14:26:25.598+0000] {task_command.py:426} INFO - Running <TaskInstance: update_database.run_football_data_docker_container manual__2024-10-16T13:13:35.782007+00:00 [running]> on host a665de55afa2
+[2024-10-16T14:26:25.821+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='update_database' AIRFLOW_CTX_TASK_ID='run_football_data_docker_container' AIRFLOW_CTX_EXECUTION_DATE='2024-10-16T13:13:35.782007+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-10-16T13:13:35.782007+00:00'
+[2024-10-16T14:26:25.828+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-10-16T14:26:30.348+0000] {logging_mixin.py:188} INFO - Container 'football_data_scraper_container' is running with DATE_ENV=2024-05-19 and bind mount C:/Users/efsta/Desktop/Kostas/Data/football_scotland/***/dags/football_data_scraper_container/csv -> /app/csv
+[2024-10-16T14:26:30.350+0000] {python.py:237} INFO - Done. Returned value was: None
+[2024-10-16T14:26:30.352+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-10-16T14:26:30.378+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=update_database, task_id=run_football_data_docker_container, run_id=manual__2024-10-16T13:13:35.782007+00:00, execution_date=20241016T131335, start_date=20241016T142625, end_date=20241016T142630
+[2024-10-16T14:26:30.459+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2024-10-16T14:26:30.514+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-10-16T14:26:30.518+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

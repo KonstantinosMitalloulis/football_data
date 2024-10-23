@@ -1,0 +1,32 @@
+1. Airflow Webserver
+
+    URL: http://localhost:8080
+    Username: airflow
+    Password: airflow
+
+2. Flower (Celery Monitoring)
+
+    URL: http://localhost:5555
+
+3. PgAdmin (Postgres Admin Interface)
+
+    URL: http://localhost:5050
+    Username: admin@admin.com
+    Password: admin
+
+4. Metabase (BI Tool)
+
+    URL: http://localhost:3000
+
+For Metabase:
+
+    Database Host: postgres
+    Database Name: real_estate_project
+    Database Port: 5432
+    Database Username: airflow
+    Database Password: airflow
+
+
+5.Docker Hub
+KostasMitalloulis
+Lithras95!

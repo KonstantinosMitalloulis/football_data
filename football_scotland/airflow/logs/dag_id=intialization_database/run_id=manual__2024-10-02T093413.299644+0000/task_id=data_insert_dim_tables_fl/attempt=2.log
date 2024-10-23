@@ -1,0 +1,169 @@
+[2024-10-02T09:45:56.623+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-10-02T09:45:56.655+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: intialization_database.data_insert_dim_tables_fl manual__2024-10-02T09:34:13.299644+00:00 [queued]>
+[2024-10-02T09:45:56.668+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: intialization_database.data_insert_dim_tables_fl manual__2024-10-02T09:34:13.299644+00:00 [queued]>
+[2024-10-02T09:45:56.669+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2024-10-02T09:45:56.686+0000] {taskinstance.py:2330} INFO - Executing <Task(PostgresOperator): data_insert_dim_tables_fl> on 2024-10-02 09:34:13.299644+00:00
+[2024-10-02T09:45:56.697+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=1655) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-10-02T09:45:56.701+0000] {standard_task_runner.py:63} INFO - Started process 1657 to run task
+[2024-10-02T09:45:56.701+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'intialization_database', 'data_insert_dim_tables_fl', 'manual__2024-10-02T09:34:13.299644+00:00', '--job-id', '3197', '--raw', '--subdir', 'DAGS_FOLDER/initialization.py', '--cfg-path', '/tmp/tmp9rpds5vl']
+[2024-10-02T09:45:56.703+0000] {standard_task_runner.py:91} INFO - Job 3197: Subtask data_insert_dim_tables_fl
+[2024-10-02T09:45:56.760+0000] {task_command.py:426} INFO - Running <TaskInstance: intialization_database.data_insert_dim_tables_fl manual__2024-10-02T09:34:13.299644+00:00 [running]> on host 6dc69f1b4d8f
+[2024-10-02T09:45:56.873+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='intialization_database' AIRFLOW_CTX_TASK_ID='data_insert_dim_tables_fl' AIRFLOW_CTX_EXECUTION_DATE='2024-10-02T09:34:13.299644+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-10-02T09:34:13.299644+00:00'
+[2024-10-02T09:45:56.875+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-10-02T09:45:56.875+0000] {sql.py:276} INFO - Executing: INSERT INTO scottish_premiership.dim_general_info (
+    game_date,
+    fd_time ,
+    hometeam ,
+    awayteam ,
+    fd_fthg ,
+    fd_ftag ,
+    fd_hthg ,
+    fd_htag ,
+    fd_ftr ,
+    fd_htr ,
+    fd_tournament_season ,
+    sofa_tournament_name ,
+    sofa_tournament_country ,
+    sofa_tournament_name_season ,
+    sofa_tournament_season ,
+    sofa_tournament_round ,
+    fbref_time ,
+    fbref_comp ,
+    fbref_round ,
+    fbref_day ,
+    fbref_attendance ,
+    fbref_full_season_format ,
+    fbref_shortened_season ,
+    fbref_match_report_url ,
+    fbref_game_venue_epoch ,
+    fbref_game_venue_time ,
+    fbref_stadium_name ,
+    german_import_time 
+)
+SELECT 
+    game_date ,
+    football_data_time ,
+    hometeam ,
+    football_data_awayteam ,
+    football_data_fthg ,
+    football_data_ftag ,
+    football_data_hthg ,
+    football_data_htag ,
+    football_data_ftr ,
+    football_data_htr ,
+    football_data_tournament_season ,
+    sofascore_tournament_name ,
+    sofascore_tournament_country ,
+    sofascore_tournament_name_season ,
+    sofascore_tournament_season ,
+    sofascore_tournament_round ,
+    fbref_only_general_stats_time ,
+    fbref_only_general_stats_comp ,
+    fbref_only_general_stats_round ,
+    fbref_only_general_stats_day ,
+    fbref_only_general_stats_score_fixtures_hometeam_attendance,
+    fbref_only_general_stats_full_season_format ,
+    fbref_only_general_stats_shortened_season ,
+    fbref_match_reports_match_report_url ,
+    fbref_match_reports_game_venue_epoch ,
+    fbref_match_reports_game_venue_time ,
+    fbref_match_reports_stadium_name ,
+    german_import_time ,
+FROM scottish_premiership.staging_table_fl
+ON CONFLICT (game_date, hometeam) DO NOTHING;  -- Prevents duplicate inserts based on game_date and hometeam
+[2024-10-02T09:45:56.885+0000] {base.py:84} INFO - Using connection ID 'football_scotland_connection' for task execution.
+[2024-10-02T09:45:56.897+0000] {base.py:84} INFO - Using connection ID 'football_scotland_connection' for task execution.
+[2024-10-02T09:45:56.902+0000] {sql.py:487} INFO - Running statement: INSERT INTO scottish_premiership.dim_general_info (
+    game_date,
+    fd_time ,
+    hometeam ,
+    awayteam ,
+    fd_fthg ,
+    fd_ftag ,
+    fd_hthg ,
+    fd_htag ,
+    fd_ftr ,
+    fd_htr ,
+    fd_tournament_season ,
+    sofa_tournament_name ,
+    sofa_tournament_country ,
+    sofa_tournament_name_season ,
+    sofa_tournament_season ,
+    sofa_tournament_round ,
+    fbref_time ,
+    fbref_comp ,
+    fbref_round ,
+    fbref_day ,
+    fbref_attendance ,
+    fbref_full_season_format ,
+    fbref_shortened_season ,
+    fbref_match_report_url ,
+    fbref_game_venue_epoch ,
+    fbref_game_venue_time ,
+    fbref_stadium_name ,
+    german_import_time 
+)
+SELECT 
+    game_date ,
+    football_data_time ,
+    hometeam ,
+    football_data_awayteam ,
+    football_data_fthg ,
+    football_data_ftag ,
+    football_data_hthg ,
+    football_data_htag ,
+    football_data_ftr ,
+    football_data_htr ,
+    football_data_tournament_season ,
+    sofascore_tournament_name ,
+    sofascore_tournament_country ,
+    sofascore_tournament_name_season ,
+    sofascore_tournament_season ,
+    sofascore_tournament_round ,
+    fbref_only_general_stats_time ,
+    fbref_only_general_stats_comp ,
+    fbref_only_general_stats_round ,
+    fbref_only_general_stats_day ,
+    fbref_only_general_stats_score_fixtures_hometeam_attendance,
+    fbref_only_general_stats_full_season_format ,
+    fbref_only_general_stats_shortened_season ,
+    fbref_match_reports_match_report_url ,
+    fbref_match_reports_game_venue_epoch ,
+    fbref_match_reports_game_venue_time ,
+    fbref_match_reports_stadium_name ,
+    german_import_time ,
+FROM scottish_premiership.staging_table_fl
+ON CONFLICT (game_date, hometeam) DO NOTHING;  -- Prevents duplicate inserts based on game_date and hometeam, parameters: None
+[2024-10-02T09:45:56.903+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-10-02T09:45:56.905+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+             ^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/common/sql/hooks/sql.py", line 435, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/common/sql/hooks/sql.py", line 492, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.SyntaxError: syntax error at or near "FROM"
+LINE 60: FROM scottish_premiership.staging_table_fl
+         ^
+
+[2024-10-02T09:45:56.917+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=intialization_database, task_id=data_insert_dim_tables_fl, run_id=manual__2024-10-02T09:34:13.299644+00:00, execution_date=20241002T093413, start_date=20241002T094556, end_date=20241002T094556
+[2024-10-02T09:45:56.939+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 3197 for task data_insert_dim_tables_fl (syntax error at or near "FROM"
+LINE 60: FROM scottish_premiership.staging_table_fl
+         ^
+; 1657)
+[2024-10-02T09:45:56.956+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-10-02T09:45:56.974+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-10-02T09:45:56.975+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

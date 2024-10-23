@@ -1,0 +1,7 @@
+$ docker run -d -v C:/Users/efsta/Desktop/Kostas/Data/football_scotland/airflow/dags/sofascore_scraper_container/csv:/app/csv sofascore_scraper_image
+
+how to create an image for pushing in personal docker hub account:
+
+docker tag sofascore_scraper_image kostasmitalloulis/sofascoe_scraper_image_up
+docker login -u kostasmitalloulis -p Lithras95!
+docker push kostasmitalloulis/sofascoe_scraper_image_up:latest

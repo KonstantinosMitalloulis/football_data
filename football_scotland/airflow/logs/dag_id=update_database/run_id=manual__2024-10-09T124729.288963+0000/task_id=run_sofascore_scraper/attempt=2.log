@@ -1,0 +1,41 @@
+[2024-10-09T12:52:39.716+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-10-09T12:52:39.749+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: update_database.run_sofascore_scraper manual__2024-10-09T12:47:29.288963+00:00 [queued]>
+[2024-10-09T12:52:39.761+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: update_database.run_sofascore_scraper manual__2024-10-09T12:47:29.288963+00:00 [queued]>
+[2024-10-09T12:52:39.763+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2024-10-09T12:52:39.792+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): run_sofascore_scraper> on 2024-10-09 12:47:29.288963+00:00
+[2024-10-09T12:52:39.807+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=206) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-10-09T12:52:39.810+0000] {standard_task_runner.py:63} INFO - Started process 208 to run task
+[2024-10-09T12:52:39.811+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'update_database', 'run_sofascore_scraper', 'manual__2024-10-09T12:47:29.288963+00:00', '--job-id', '3867', '--raw', '--subdir', 'DAGS_FOLDER/update.py', '--cfg-path', '/tmp/tmp6sl2z9f6']
+[2024-10-09T12:52:39.813+0000] {standard_task_runner.py:91} INFO - Job 3867: Subtask run_sofascore_scraper
+[2024-10-09T12:52:39.872+0000] {task_command.py:426} INFO - Running <TaskInstance: update_database.run_sofascore_scraper manual__2024-10-09T12:47:29.288963+00:00 [running]> on host e77972c4fa98
+[2024-10-09T12:52:40.010+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='update_database' AIRFLOW_CTX_TASK_ID='run_sofascore_scraper' AIRFLOW_CTX_EXECUTION_DATE='2024-10-09T12:47:29.288963+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-10-09T12:47:29.288963+00:00'
+[2024-10-09T12:52:40.013+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-10-09T12:52:40.014+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2024-10-09T12:52:40.016+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'docker run -d --name sofascore_scraper_container -v C:/Users/efsta/Desktop/Kostas/Data/football_scotland/***/dags/sofascore_scraper_container/csv:/app/csv sofascore_scraper_image:latest']
+[2024-10-09T12:52:40.033+0000] {subprocess.py:86} INFO - Output:
+[2024-10-09T12:52:40.075+0000] {subprocess.py:93} INFO - Unable to find image 'sofascore_scraper_image:latest' locally
+[2024-10-09T12:52:41.485+0000] {subprocess.py:93} INFO - docker: Error response from daemon: pull access denied for sofascore_scraper_image, repository does not exist or may require 'docker login': denied: requested access to the resource is denied.
+[2024-10-09T12:52:41.487+0000] {subprocess.py:93} INFO - See 'docker run --help'.
+[2024-10-09T12:52:41.488+0000] {subprocess.py:97} INFO - Command exited with return code 125
+[2024-10-09T12:52:41.490+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-10-09T12:52:41.510+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/bash.py", line 243, in execute
+    raise AirflowException(
+airflow.exceptions.AirflowException: Bash command failed. The command returned a non-zero exit code 125.
+[2024-10-09T12:52:41.524+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=update_database, task_id=run_sofascore_scraper, run_id=manual__2024-10-09T12:47:29.288963+00:00, execution_date=20241009T124729, start_date=20241009T125239, end_date=20241009T125241
+[2024-10-09T12:52:41.563+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 3867 for task run_sofascore_scraper (Bash command failed. The command returned a non-zero exit code 125.; 208)
+[2024-10-09T12:52:41.594+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-10-09T12:52:41.616+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-10-09T12:52:41.618+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

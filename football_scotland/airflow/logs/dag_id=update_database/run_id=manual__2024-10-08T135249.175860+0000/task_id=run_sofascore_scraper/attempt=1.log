@@ -1,0 +1,47 @@
+[2024-10-08T13:52:53.622+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-10-08T13:52:53.656+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: update_database.run_sofascore_scraper manual__2024-10-08T13:52:49.175860+00:00 [queued]>
+[2024-10-08T13:52:53.667+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: update_database.run_sofascore_scraper manual__2024-10-08T13:52:49.175860+00:00 [queued]>
+[2024-10-08T13:52:53.668+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-10-08T13:52:53.685+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): run_sofascore_scraper> on 2024-10-08 13:52:49.175860+00:00
+[2024-10-08T13:52:53.694+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=63) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-10-08T13:52:53.696+0000] {standard_task_runner.py:63} INFO - Started process 65 to run task
+[2024-10-08T13:52:53.695+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'update_database', 'run_sofascore_scraper', 'manual__2024-10-08T13:52:49.175860+00:00', '--job-id', '3814', '--raw', '--subdir', 'DAGS_FOLDER/update.py', '--cfg-path', '/tmp/tmp_9vd0kfn']
+[2024-10-08T13:52:53.696+0000] {standard_task_runner.py:91} INFO - Job 3814: Subtask run_sofascore_scraper
+[2024-10-08T13:52:53.769+0000] {task_command.py:426} INFO - Running <TaskInstance: update_database.run_sofascore_scraper manual__2024-10-08T13:52:49.175860+00:00 [running]> on host 5e30186d778c
+[2024-10-08T13:52:53.924+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='update_database' AIRFLOW_CTX_TASK_ID='run_sofascore_scraper' AIRFLOW_CTX_EXECUTION_DATE='2024-10-08T13:52:49.175860+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-10-08T13:52:49.175860+00:00'
+[2024-10-08T13:52:53.927+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-10-08T13:52:53.929+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2024-10-08T13:52:53.930+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'docker run -d --name sofascore_scraper_container -v C:/Users/efsta/Desktop/Kostas/Data/football_scotland/***/dags/sofascore_scraper_container/csv:/app/csv kostasmitalloulis/sofascoe_scraper_image_up:latest']
+[2024-10-08T13:52:53.941+0000] {subprocess.py:86} INFO - Output:
+[2024-10-08T13:52:54.057+0000] {subprocess.py:93} INFO - Unable to find image 'kostasmitalloulis/sofascoe_scraper_image_up:latest' locally
+[2024-10-08T13:52:55.687+0000] {subprocess.py:93} INFO - latest: Pulling from kostasmitalloulis/sofascoe_scraper_image_up
+[2024-10-08T13:52:55.690+0000] {subprocess.py:93} INFO - ba83bbfca944: Already exists
+[2024-10-08T13:52:55.699+0000] {subprocess.py:93} INFO - 48e779000ed2: Already exists
+[2024-10-08T13:52:55.705+0000] {subprocess.py:93} INFO - 6d691dff6d17: Already exists
+[2024-10-08T13:52:55.711+0000] {subprocess.py:93} INFO - 54cfd3060466: Already exists
+[2024-10-08T13:52:55.717+0000] {subprocess.py:93} INFO - de88d2367fa4: Already exists
+[2024-10-08T13:52:55.722+0000] {subprocess.py:93} INFO - 203a2ed516c5: Already exists
+[2024-10-08T13:52:55.728+0000] {subprocess.py:93} INFO - 1098fe96b80e: Already exists
+[2024-10-08T13:52:55.734+0000] {subprocess.py:93} INFO - cd8e006d5451: Already exists
+[2024-10-08T13:52:55.739+0000] {subprocess.py:93} INFO - 7ad1e9b29e9f: Already exists
+[2024-10-08T13:52:55.745+0000] {subprocess.py:93} INFO - 41837d337653: Already exists
+[2024-10-08T13:52:55.752+0000] {subprocess.py:93} INFO - 9760b483e39f: Already exists
+[2024-10-08T13:52:55.757+0000] {subprocess.py:93} INFO - c40a00e15ad1: Already exists
+[2024-10-08T13:52:55.762+0000] {subprocess.py:93} INFO - 6b609d0d34f7: Already exists
+[2024-10-08T13:52:55.767+0000] {subprocess.py:93} INFO - c909bc22699e: Already exists
+[2024-10-08T13:52:55.772+0000] {subprocess.py:93} INFO - 399169395b2e: Already exists
+[2024-10-08T13:52:55.775+0000] {subprocess.py:93} INFO - 030c072bb975: Already exists
+[2024-10-08T13:52:55.780+0000] {subprocess.py:93} INFO - d7703c55093d: Already exists
+[2024-10-08T13:52:55.783+0000] {subprocess.py:93} INFO - 2a1870666e16: Already exists
+[2024-10-08T13:52:55.786+0000] {subprocess.py:93} INFO - 916865935dac: Already exists
+[2024-10-08T13:52:56.148+0000] {subprocess.py:93} INFO - Digest: sha256:b006a03f459412ff1f832f038b08ce4a3c259b5f5216e68ba1f72d9e2656c479
+[2024-10-08T13:52:56.150+0000] {subprocess.py:93} INFO - Status: Downloaded newer image for kostasmitalloulis/sofascoe_scraper_image_up:latest
+[2024-10-08T13:52:56.249+0000] {subprocess.py:93} INFO - e15fd700751f55347974f7bc5f4c4ac57105c71077a191c8ca2593d017dbbd07
+[2024-10-08T13:52:56.739+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2024-10-08T13:52:56.740+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-10-08T13:52:56.776+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=update_database, task_id=run_sofascore_scraper, run_id=manual__2024-10-08T13:52:49.175860+00:00, execution_date=20241008T135249, start_date=20241008T135253, end_date=20241008T135256
+[2024-10-08T13:52:56.847+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2024-10-08T13:52:56.875+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-10-08T13:52:56.877+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

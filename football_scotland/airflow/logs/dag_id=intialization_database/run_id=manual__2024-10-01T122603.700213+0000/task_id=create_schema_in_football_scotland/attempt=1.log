@@ -1,0 +1,30 @@
+[2024-10-01T12:26:49.013+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-10-01T12:26:49.037+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: intialization_database.create_schema_in_football_scotland manual__2024-10-01T12:26:03.700213+00:00 [queued]>
+[2024-10-01T12:26:49.046+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: intialization_database.create_schema_in_football_scotland manual__2024-10-01T12:26:03.700213+00:00 [queued]>
+[2024-10-01T12:26:49.048+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-10-01T12:26:49.064+0000] {taskinstance.py:2330} INFO - Executing <Task(PostgresOperator): create_schema_in_football_scotland> on 2024-10-01 12:26:03.700213+00:00
+[2024-10-01T12:26:49.073+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=1694) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-10-01T12:26:49.076+0000] {standard_task_runner.py:63} INFO - Started process 1696 to run task
+[2024-10-01T12:26:49.076+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'intialization_database', 'create_schema_in_football_scotland', 'manual__2024-10-01T12:26:03.700213+00:00', '--job-id', '2980', '--raw', '--subdir', 'DAGS_FOLDER/initialization.py', '--cfg-path', '/tmp/tmp4s_06m_3']
+[2024-10-01T12:26:49.077+0000] {standard_task_runner.py:91} INFO - Job 2980: Subtask create_schema_in_football_scotland
+[2024-10-01T12:26:49.127+0000] {task_command.py:426} INFO - Running <TaskInstance: intialization_database.create_schema_in_football_scotland manual__2024-10-01T12:26:03.700213+00:00 [running]> on host f8103d9b7858
+[2024-10-01T12:26:49.224+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='intialization_database' AIRFLOW_CTX_TASK_ID='create_schema_in_football_scotland' AIRFLOW_CTX_EXECUTION_DATE='2024-10-01T12:26:03.700213+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-10-01T12:26:03.700213+00:00'
+[2024-10-01T12:26:49.226+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-10-01T12:26:49.227+0000] {sql.py:276} INFO - Executing: 
+        CREATE SCHEMA IF NOT EXISTS scottish_premiership;
+    
+[2024-10-01T12:26:49.236+0000] {base.py:84} INFO - Using connection ID 'football_scotland_connection' for task execution.
+[2024-10-01T12:26:49.247+0000] {base.py:84} INFO - Using connection ID 'football_scotland_connection' for task execution.
+[2024-10-01T12:26:49.253+0000] {sql.py:487} INFO - Running statement: 
+        CREATE SCHEMA IF NOT EXISTS scottish_premiership;
+    , parameters: None
+[2024-10-01T12:26:49.256+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-10-01T12:26:49.266+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=intialization_database, task_id=create_schema_in_football_scotland, run_id=manual__2024-10-01T12:26:03.700213+00:00, execution_date=20241001T122603, start_date=20241001T122649, end_date=20241001T122649
+[2024-10-01T12:26:49.290+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2024-10-01T12:26:49.301+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/models/baseoperator.py:1297: AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `***.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+  result = cls.__new__(cls)
+
+[2024-10-01T12:26:49.313+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2024-10-01T12:26:49.316+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

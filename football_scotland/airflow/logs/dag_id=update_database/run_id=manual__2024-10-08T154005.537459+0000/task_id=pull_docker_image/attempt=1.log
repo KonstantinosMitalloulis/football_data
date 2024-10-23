@@ -1,0 +1,45 @@
+[2024-10-08T15:40:11.932+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-10-08T15:40:11.977+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: update_database.pull_docker_image manual__2024-10-08T15:40:05.537459+00:00 [queued]>
+[2024-10-08T15:40:11.994+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: update_database.pull_docker_image manual__2024-10-08T15:40:05.537459+00:00 [queued]>
+[2024-10-08T15:40:11.995+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-10-08T15:40:12.018+0000] {taskinstance.py:2330} INFO - Executing <Task(BashOperator): pull_docker_image> on 2024-10-08 15:40:05.537459+00:00
+[2024-10-08T15:40:12.027+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=1145) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-10-08T15:40:12.030+0000] {standard_task_runner.py:63} INFO - Started process 1154 to run task
+[2024-10-08T15:40:12.030+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'update_database', 'pull_docker_image', 'manual__2024-10-08T15:40:05.537459+00:00', '--job-id', '3849', '--raw', '--subdir', 'DAGS_FOLDER/update.py', '--cfg-path', '/tmp/tmp9fjtdyf6']
+[2024-10-08T15:40:12.032+0000] {standard_task_runner.py:91} INFO - Job 3849: Subtask pull_docker_image
+[2024-10-08T15:40:12.094+0000] {task_command.py:426} INFO - Running <TaskInstance: update_database.pull_docker_image manual__2024-10-08T15:40:05.537459+00:00 [running]> on host 1fee8bc549a8
+[2024-10-08T15:40:12.265+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='update_database' AIRFLOW_CTX_TASK_ID='pull_docker_image' AIRFLOW_CTX_EXECUTION_DATE='2024-10-08T15:40:05.537459+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-10-08T15:40:05.537459+00:00'
+[2024-10-08T15:40:12.268+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-10-08T15:40:12.270+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2024-10-08T15:40:12.272+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'docker pull kostasmitalloulis/sofascoe_scraper_image_up:latest']
+[2024-10-08T15:40:12.298+0000] {subprocess.py:86} INFO - Output:
+[2024-10-08T15:40:14.044+0000] {subprocess.py:93} INFO - latest: Pulling from kostasmitalloulis/sofascoe_scraper_image_up
+[2024-10-08T15:40:14.046+0000] {subprocess.py:93} INFO - ba83bbfca944: Already exists
+[2024-10-08T15:40:14.056+0000] {subprocess.py:93} INFO - 48e779000ed2: Already exists
+[2024-10-08T15:40:14.062+0000] {subprocess.py:93} INFO - 6d691dff6d17: Already exists
+[2024-10-08T15:40:14.068+0000] {subprocess.py:93} INFO - 54cfd3060466: Already exists
+[2024-10-08T15:40:14.073+0000] {subprocess.py:93} INFO - de88d2367fa4: Already exists
+[2024-10-08T15:40:14.078+0000] {subprocess.py:93} INFO - 203a2ed516c5: Already exists
+[2024-10-08T15:40:14.086+0000] {subprocess.py:93} INFO - 1098fe96b80e: Already exists
+[2024-10-08T15:40:14.091+0000] {subprocess.py:93} INFO - cd8e006d5451: Already exists
+[2024-10-08T15:40:14.096+0000] {subprocess.py:93} INFO - 7ad1e9b29e9f: Already exists
+[2024-10-08T15:40:14.101+0000] {subprocess.py:93} INFO - 41837d337653: Already exists
+[2024-10-08T15:40:14.106+0000] {subprocess.py:93} INFO - 9760b483e39f: Already exists
+[2024-10-08T15:40:14.112+0000] {subprocess.py:93} INFO - c40a00e15ad1: Already exists
+[2024-10-08T15:40:14.119+0000] {subprocess.py:93} INFO - 6b609d0d34f7: Already exists
+[2024-10-08T15:40:14.128+0000] {subprocess.py:93} INFO - c909bc22699e: Already exists
+[2024-10-08T15:40:14.136+0000] {subprocess.py:93} INFO - 399169395b2e: Already exists
+[2024-10-08T15:40:14.144+0000] {subprocess.py:93} INFO - 030c072bb975: Already exists
+[2024-10-08T15:40:14.150+0000] {subprocess.py:93} INFO - d7703c55093d: Already exists
+[2024-10-08T15:40:14.156+0000] {subprocess.py:93} INFO - 2a1870666e16: Already exists
+[2024-10-08T15:40:14.163+0000] {subprocess.py:93} INFO - 916865935dac: Already exists
+[2024-10-08T15:40:14.501+0000] {subprocess.py:93} INFO - Digest: sha256:b006a03f459412ff1f832f038b08ce4a3c259b5f5216e68ba1f72d9e2656c479
+[2024-10-08T15:40:14.506+0000] {subprocess.py:93} INFO - Status: Downloaded newer image for kostasmitalloulis/sofascoe_scraper_image_up:latest
+[2024-10-08T15:40:14.525+0000] {subprocess.py:93} INFO - docker.io/kostasmitalloulis/sofascoe_scraper_image_up:latest
+[2024-10-08T15:40:14.528+0000] {subprocess.py:97} INFO - Command exited with return code 0
+[2024-10-08T15:40:14.530+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-10-08T15:40:14.600+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=update_database, task_id=pull_docker_image, run_id=manual__2024-10-08T15:40:05.537459+00:00, execution_date=20241008T154005, start_date=20241008T154011, end_date=20241008T154014
+[2024-10-08T15:40:14.661+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2024-10-08T15:40:14.682+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

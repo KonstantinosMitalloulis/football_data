@@ -1,0 +1,41 @@
+[2024-09-27T11:21:20.924+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-09-27T11:21:20.963+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: intialization_database.merge_transform_football_data_task manual__2024-09-27T11:16:01.190223+00:00 [queued]>
+[2024-09-27T11:21:20.980+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: intialization_database.merge_transform_football_data_task manual__2024-09-27T11:16:01.190223+00:00 [queued]>
+[2024-09-27T11:21:20.981+0000] {taskinstance.py:2306} INFO - Starting attempt 2 of 2
+[2024-09-27T11:21:21.007+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): merge_transform_football_data_task> on 2024-09-27 11:16:01.190223+00:00
+[2024-09-27T11:21:21.020+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=584) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-09-27T11:21:21.023+0000] {standard_task_runner.py:63} INFO - Started process 588 to run task
+[2024-09-27T11:21:21.023+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'intialization_database', 'merge_transform_football_data_task', 'manual__2024-09-27T11:16:01.190223+00:00', '--job-id', '2745', '--raw', '--subdir', 'DAGS_FOLDER/initialization.py', '--cfg-path', '/tmp/tmp_beh88_e']
+[2024-09-27T11:21:21.025+0000] {standard_task_runner.py:91} INFO - Job 2745: Subtask merge_transform_football_data_task
+[2024-09-27T11:21:21.094+0000] {task_command.py:426} INFO - Running <TaskInstance: intialization_database.merge_transform_football_data_task manual__2024-09-27T11:16:01.190223+00:00 [running]> on host e6ca4ed1725f
+[2024-09-27T11:21:21.226+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='intialization_database' AIRFLOW_CTX_TASK_ID='merge_transform_football_data_task' AIRFLOW_CTX_EXECUTION_DATE='2024-09-27T11:16:01.190223+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-09-27T11:16:01.190223+00:00'
+[2024-09-27T11:21:21.229+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-09-27T11:21:21.235+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-09-27T11:21:21.236+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 235, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/operators/python.py", line 252, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/dag_function_helpers/first_load/football_data_merging_transforming_csvs_fl.py", line 39, in football_data_merging_transforming_csvs_fl
+    dataframes.append(df)
+                      ^^
+UnboundLocalError: cannot access local variable 'df' where it is not associated with a value
+[2024-09-27T11:21:21.270+0000] {taskinstance.py:1206} INFO - Marking task as FAILED. dag_id=intialization_database, task_id=merge_transform_football_data_task, run_id=manual__2024-09-27T11:16:01.190223+00:00, execution_date=20240927T111601, start_date=20240927T112120, end_date=20240927T112121
+[2024-09-27T11:21:21.299+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 2745 for task merge_transform_football_data_task (cannot access local variable 'df' where it is not associated with a value; 588)
+[2024-09-27T11:21:21.319+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-09-27T11:21:21.366+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-09-27T11:21:21.378+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

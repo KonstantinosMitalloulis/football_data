@@ -1,0 +1,26 @@
+[2024-10-02T19:29:50.486+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-10-02T19:29:50.515+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: intialization_database.copy_data_to_staging_table_fl manual__2024-10-02T19:28:44.077894+00:00 [queued]>
+[2024-10-02T19:29:50.527+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: intialization_database.copy_data_to_staging_table_fl manual__2024-10-02T19:28:44.077894+00:00 [queued]>
+[2024-10-02T19:29:50.528+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-10-02T19:29:50.546+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): copy_data_to_staging_table_fl> on 2024-10-02 19:28:44.077894+00:00
+[2024-10-02T19:29:50.555+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=9912) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-10-02T19:29:50.557+0000] {standard_task_runner.py:63} INFO - Started process 9914 to run task
+[2024-10-02T19:29:50.557+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'intialization_database', 'copy_data_to_staging_table_fl', 'manual__2024-10-02T19:28:44.077894+00:00', '--job-id', '3501', '--raw', '--subdir', 'DAGS_FOLDER/initialization.py', '--cfg-path', '/tmp/tmpz7kav1er']
+[2024-10-02T19:29:50.559+0000] {standard_task_runner.py:91} INFO - Job 3501: Subtask copy_data_to_staging_table_fl
+[2024-10-02T19:29:50.650+0000] {task_command.py:426} INFO - Running <TaskInstance: intialization_database.copy_data_to_staging_table_fl manual__2024-10-02T19:28:44.077894+00:00 [running]> on host 6dc69f1b4d8f
+[2024-10-02T19:29:51.062+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='intialization_database' AIRFLOW_CTX_TASK_ID='copy_data_to_staging_table_fl' AIRFLOW_CTX_EXECUTION_DATE='2024-10-02T19:28:44.077894+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-10-02T19:28:44.077894+00:00'
+[2024-10-02T19:29:51.066+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-10-02T19:29:56.078+0000] {warnings.py:112} WARNING - /opt/***/dags/helpers_initialization_dag/copy_data_to_staging_table_fl.py:9: DtypeWarning: Columns (1,30,32,33,34,35,37,38,39,40,47,48,49,50,51,52,53,54,55,56,57,58,59,60,65,66,67,68,69,118,119,120,121,122,123,126,127,128,129,130,131,132,133,148,149,198,199,200,201,202,203,206,207,208,209,210,211,212,213,228,229,278,279,280,281,282,283,286,287,288,289,290,291,292,293,308,309,313,317,318,319,320,321,322,323,324,329,330,331,336,337,338,339,350,361,370,380,381,382,383,384,385,386,387,389,390,391,392,393,394,395,396,405,406,407,408,409,410,411,412,413,414,415,416,417,418,419,420,421,422,423,424,425,426) have mixed types. Specify dtype option on import or set low_memory=False.
+  df = pd.read_csv('/opt/***/dags/csvs/first_load_csvs/all_sources_merged_transformed.csv')
+
+[2024-10-02T19:30:13.815+0000] {python.py:237} INFO - Done. Returned value was: None
+[2024-10-02T19:30:13.817+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-10-02T19:30:13.829+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=intialization_database, task_id=copy_data_to_staging_table_fl, run_id=manual__2024-10-02T19:28:44.077894+00:00, execution_date=20241002T192844, start_date=20241002T192950, end_date=20241002T193013
+[2024-10-02T19:30:13.872+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2024-10-02T19:30:13.882+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/models/baseoperator.py:1297: AirflowProviderDeprecationWarning: Call to deprecated class PostgresOperator. (Please use `***.providers.common.sql.operators.sql.SQLExecuteQueryOperator`.Also, you can provide `hook_params={'schema': <database>}`.)
+  result = cls.__new__(cls)
+
+[2024-10-02T19:30:13.901+0000] {taskinstance.py:3503} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2024-10-02T19:30:13.903+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

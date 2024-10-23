@@ -1,0 +1,22 @@
+[2024-09-29T12:28:21.916+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-09-29T12:28:21.946+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: intialization_database.create_pgadmin_server manual__2024-09-29T12:27:42.051590+00:00 [queued]>
+[2024-09-29T12:28:21.958+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: intialization_database.create_pgadmin_server manual__2024-09-29T12:27:42.051590+00:00 [queued]>
+[2024-09-29T12:28:21.959+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2024-09-29T12:28:21.978+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): create_pgadmin_server> on 2024-09-29 12:27:42.051590+00:00
+[2024-09-29T12:28:21.987+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=1340) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-09-29T12:28:21.989+0000] {standard_task_runner.py:63} INFO - Started process 1342 to run task
+[2024-09-29T12:28:21.990+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'intialization_database', 'create_pgadmin_server', 'manual__2024-09-29T12:27:42.051590+00:00', '--job-id', '2824', '--raw', '--subdir', 'DAGS_FOLDER/initialization.py', '--cfg-path', '/tmp/tmpmjmobjn8']
+[2024-09-29T12:28:21.992+0000] {standard_task_runner.py:91} INFO - Job 2824: Subtask create_pgadmin_server
+[2024-09-29T12:28:22.057+0000] {task_command.py:426} INFO - Running <TaskInstance: intialization_database.create_pgadmin_server manual__2024-09-29T12:27:42.051590+00:00 [running]> on host e78fe06b6548
+[2024-09-29T12:28:22.190+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='intialization_database' AIRFLOW_CTX_TASK_ID='create_pgadmin_server' AIRFLOW_CTX_EXECUTION_DATE='2024-09-29T12:27:42.051590+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-09-29T12:27:42.051590+00:00'
+[2024-09-29T12:28:22.192+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-09-29T12:28:22.343+0000] {logging_mixin.py:188} INFO - Logged in successfully.
+[2024-09-29T12:28:22.383+0000] {logging_mixin.py:188} INFO - Failed to create server: b'<!doctype html>\n<html lang=en>\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.</p>\n'
+[2024-09-29T12:28:22.421+0000] {python.py:237} INFO - Done. Returned value was: None
+[2024-09-29T12:28:22.422+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-09-29T12:28:22.439+0000] {taskinstance.py:1206} INFO - Marking task as SUCCESS. dag_id=intialization_database, task_id=create_pgadmin_server, run_id=manual__2024-09-29T12:27:42.051590+00:00, execution_date=20240929T122742, start_date=20240929T122821, end_date=20240929T122822
+[2024-09-29T12:28:22.488+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 0
+[2024-09-29T12:28:22.519+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-09-29T12:28:22.523+0000] {local_task_job_runner.py:222} INFO - ::endgroup::

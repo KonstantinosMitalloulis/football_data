@@ -1,0 +1,1187 @@
+[2024-10-02T18:55:30.003+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2024-10-02T18:55:30.074+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: intialization_database.data_insert_dim_tables_fl manual__2024-10-02T18:53:54.511300+00:00 [queued]>
+[2024-10-02T18:55:30.096+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: intialization_database.data_insert_dim_tables_fl manual__2024-10-02T18:53:54.511300+00:00 [queued]>
+[2024-10-02T18:55:30.098+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 2
+[2024-10-02T18:55:30.121+0000] {taskinstance.py:2330} INFO - Executing <Task(PostgresOperator): data_insert_dim_tables_fl> on 2024-10-02 18:53:54.511300+00:00
+[2024-10-02T18:55:30.137+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:61: DeprecationWarning: This process (pid=9300) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2024-10-02T18:55:30.142+0000] {standard_task_runner.py:63} INFO - Started process 9302 to run task
+[2024-10-02T18:55:30.142+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'intialization_database', 'data_insert_dim_tables_fl', 'manual__2024-10-02T18:53:54.511300+00:00', '--job-id', '3434', '--raw', '--subdir', 'DAGS_FOLDER/initialization.py', '--cfg-path', '/tmp/tmpqt9n6s90']
+[2024-10-02T18:55:30.144+0000] {standard_task_runner.py:91} INFO - Job 3434: Subtask data_insert_dim_tables_fl
+[2024-10-02T18:55:30.223+0000] {task_command.py:426} INFO - Running <TaskInstance: intialization_database.data_insert_dim_tables_fl manual__2024-10-02T18:53:54.511300+00:00 [running]> on host 6dc69f1b4d8f
+[2024-10-02T18:55:30.416+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='intialization_database' AIRFLOW_CTX_TASK_ID='data_insert_dim_tables_fl' AIRFLOW_CTX_EXECUTION_DATE='2024-10-02T18:53:54.511300+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-10-02T18:53:54.511300+00:00'
+[2024-10-02T18:55:30.418+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2024-10-02T18:55:30.420+0000] {sql.py:276} INFO - Executing: INSERT INTO scottish_premiership.dim_general_info (
+    game_date,
+    fd_time ,
+    hometeam ,
+    awayteam ,
+    fd_fthg ,
+    fd_ftag ,
+    fd_hthg ,
+    fd_htag ,
+    fd_ftr ,
+    fd_htr ,
+    fd_tournament_season ,
+    sofa_tournament_name ,
+    sofa_tournament_country ,
+    sofa_tournament_name_season ,
+    sofa_tournament_season ,
+    sofa_tournament_round ,
+    fbref_time ,
+    fbref_comp ,
+    fbref_round ,
+    fbref_day ,
+    fbref_attendance ,
+    fbref_full_season_format ,
+    fbref_shortened_season ,
+    fbref_match_report_url ,
+    fbref_game_venue_epoch ,
+    fbref_game_venue_time ,
+    fbref_stadium_name ,
+    german_import_time 
+)
+SELECT 
+    game_date ,
+    football_data_time ,
+    hometeam ,
+    football_data_awayteam ,
+    football_data_fthg ,
+    football_data_ftag ,
+    football_data_hthg ,
+    football_data_htag ,
+    football_data_ftr ,
+    football_data_htr ,
+    football_data_tournament_season ,
+    sofascore_tournament_name ,
+    sofascore_tournament_country ,
+    sofascore_tournament_name_season ,
+    sofascore_tournament_season ,
+    sofascore_tournament_round ,
+    fbref_only_general_stats_time ,
+    fbref_only_general_stats_comp ,
+    fbref_only_general_stats_round ,
+    fbref_only_general_stats_day ,
+    fbref_only_general_stats_score_fixtures_hometeam_attendance,
+    fbref_only_general_stats_full_season_format ,
+    fbref_only_general_stats_shortened_season ,
+    fbref_match_reports_match_report_url ,
+    fbref_match_reports_game_venue_epoch ,
+    fbref_match_reports_game_venue_time ,
+    fbref_match_reports_stadium_name ,
+    german_import_time 
+FROM scottish_premiership.staging_table_fl
+ON CONFLICT (game_date, hometeam) DO NOTHING;  -- Prevents duplicate inserts based on game_date and hometeam
+
+
+
+--dim referees
+INSERT INTO scottish_premiership.dim_referees (
+    game_id , 
+    fd_referee ,
+    sofa_referee_name ,
+    sofa_referee_yellow_cards ,
+    sofa_referee_redcards ,
+    sofa_referee_yellowredcards ,	
+    sofa_referee_games	,
+    sofa_referee_country ,
+    fbref_gs_referee ,--general stats
+    fbref_referee	,
+    fbref_ar_first	,
+    fbref_ar_second	,
+    fbref_fourth_official 
+)
+SELECT 
+    dg.game_id, 
+    st.football_data_referee, 
+    st.sofascore_referee_name, 
+    st.sofascore_referee_yellow_cards, 
+    st.sofascore_referee_redcards, 
+    st.sofascore_referee_yellowredcards, 
+    st.sofascore_referee_games, 
+    st.sofascore_referee_country, 
+    st.fbref_only_general_stats_referee,
+    st.fbref_match_reports_referee,
+    st.fbref_match_reports_ar1,
+    st.fbref_match_reports_ar2,
+    st.fbref_match_reports_fourth_official   
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;  -- Prevents inserting duplicate statistics for the same game_id
+
+
+--dim_managers
+INSERT INTO scottish_premiership.dim_managers (
+    game_id, 
+    sofa_home_manager_name, 
+    sofa_home_manager_slug,	
+    sofa_away_manager_name,	
+    sofa_away_manager_slug,
+    fbref_hometeam_manager,	
+    fbref_awayteam_manager
+)
+SELECT 
+    dg.game_id, 
+    st.sofascore_home_manager_name, 
+    st.sofascore_home_manager_slug,	
+    st.sofascore_away_manager_name,	
+    st.sofascore_away_manager_slug,
+    st.fbref_match_reports_hometeam_manager,	
+    st.fbref_match_reports_awayteam_manager
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+
+--dim_betting_odds
+INSERT INTO scottish_premiership.dim_betting_odds (
+    game_id, 
+    fd_b365h, 
+    fd_b365d,	
+    fd_b365a,	
+    fd_bwh,
+    fd_bwd,	
+    fd_bwa
+)
+SELECT 
+    dg.game_id, 
+    st.football_data_b365h, 
+    st.football_data_b365d,	
+    st.football_data_b365a,	
+    st.football_data_bwh,
+    st.football_data_bwd,	
+    st.football_data_bwa
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+
+--dim_shots
+INSERT INTO scottish_premiership.dim_shots (
+    game_id, 
+    fd_hs, 
+    fd_as,	
+    fd_hst,	
+    fd_ast,
+    sofa_all_home_total_shots,	
+    sofa_all_away_total_shots,
+    sofa_all_home_shots_on_target,
+    sofa_all_away_shots_on_target,
+    sofa_all_home_hit_woodwork	,
+    sofa_all_away_hit_woodwork	,
+    sofa_all_home_shots_off_target	,
+    sofa_all_away_shots_off_target	,
+    sofa_all_home_blocked_shots	,
+    sofa_all_away_blocked_shots,
+    sofa_all_home_shots_inside_box,
+    sofa_all_away_shots_inside_box,
+    sofa_all_home_shots_outside_box,
+    sofa_all_away_shots_outside_box,
+    sofa_first_half_home_total_shots,
+    sofa_first_half_away_total_shots,
+    sofa_first_half_home_shots_on_target,
+    sofa_first_half_away_shots_on_target,
+    sofa_first_half_home_hit_woodwork,
+    sofa_first_half_away_hit_woodwork,
+    sofa_first_half_home_shots_off_target,
+    sofa_first_half_away_shots_off_target,
+    sofa_first_half_home_blocked_shots,
+    sofa_first_half_away_blocked_shots,
+    sofa_first_half_home_shots_inside_box,
+    sofa_first_half_away_shots_inside_box,
+    sofa_first_half_home_shots_outside_box,
+    sofa_first_half_away_shots_outside_box,
+    sofa_second_half_home_total_shots,
+    sofa_second_half_away_total_shots,
+    sofa_second_half_home_shots_on_target,
+    sofa_second_half_away_shots_on_target,
+    sofa_second_half_home_hit_woodwork,
+    sofa_second_half_away_hit_woodwork,
+    sofa_second_half_home_shots_off_target,
+    sofa_second_half_away_shots_off_target,
+    sofa_second_half_home_blocked_shots,
+    sofa_second_half_away_blocked_shots,
+    sofa_second_half_home_shots_inside_box,
+    sofa_second_half_away_shots_inside_box,
+    sofa_second_half_home_shots_outside_box,
+    sofa_second_half_away_shots_outside_box,
+    fbref_hometeam_sh,
+    fbref_hometeam_sot,
+    fbref_hometeam_sot_percentage,
+    fbref_hometeam_gsh,
+    fbref_hometeam_gsot,
+    fbref_hometeam_pk,
+    fbref_hometeam_pkatt,
+    fbref_awayteam_sh,
+    fbref_awayteam_sot,
+    fbref_awayteam_sot_percentage,
+    fbref_awayteam_gsh,
+    fbref_awayteam_gsot,
+    fbref_awayteam_pk,
+    fbref_awayteam_pkatt,
+    fbref_hometeam_shots_on_target_percentage,
+    fbref_awayteam_shots_on_target_percentage,
+    fbref_hometean_shots_not_percentages,
+    fbref_awayteam_shots_not_percentages
+)
+SELECT 
+    dg.game_id, 
+    st.football_data_hs, 
+    st.football_data_as,	
+    st.football_data_hst,	
+    st.football_data_ast,
+    st.sofascore_all_home_total_shots,	
+    st.sofascore_all_away_total_shots,
+    st.sofascore_all_home_shots_on_target,
+    st.sofascore_all_away_shots_on_target,
+    st.sofascore_all_home_hit_woodwork	,
+    st.sofascore_all_away_hit_woodwork	,
+    st.sofascore_all_home_shots_off_target,	
+    st.sofascore_all_away_shots_off_target,	
+    st.sofascore_all_home_blocked_shots	,
+    st.sofascore_all_away_blocked_shots,
+    st.sofascore_all_home_shots_inside_box,
+    st.sofascore_all_away_shots_inside_box,
+    st.sofascore_all_home_shots_outside_box,
+    st.sofascore_all_away_shots_outside_box,
+    st.sofascore_first_half_home_total_shots,
+    st.sofascore_first_half_away_total_shots,
+    st.sofascore_first_half_home_shots_on_target,
+    st.sofascore_first_half_away_shots_on_target,
+    st.sofascore_first_half_home_hit_woodwork,
+    st.sofascore_first_half_away_hit_woodwork,
+    st.sofascore_first_half_home_shots_off_target,
+    st.sofascore_first_half_away_shots_off_target,
+    st.sofascore_first_half_home_blocked_shots,
+    st.sofascore_first_half_away_blocked_shots,
+    st.sofascore_first_half_home_shots_inside_box,
+    st.sofascore_first_half_away_shots_inside_box,
+    st.sofascore_first_half_home_shots_outside_box,
+    st.sofascore_first_half_away_shots_outside_box,
+    st.sofascore_second_half_home_total_shots,
+    st.sofascore_second_half_away_total_shots,
+    st.sofascore_second_half_home_shots_on_target,
+    st.sofascore_second_half_away_shots_on_target,
+    st.sofascore_second_half_home_hit_woodwork,
+    st.sofascore_second_half_away_hit_woodwork,
+    st.sofascore_second_half_home_shots_off_target,
+    st.sofascore_second_half_away_shots_off_target,
+    st.sofascore_second_half_home_blocked_shots,
+    st.sofascore_second_half_away_blocked_shots,
+    st.sofascore_second_half_home_shots_inside_box,
+    st.sofascore_second_half_away_shots_inside_box,
+    st.sofascore_second_half_home_shots_outside_box,
+    st.sofascore_second_half_away_shots_outside_box,
+    st.fbref_only_general_stats_shooting_hometeam_sh,
+    st.fbref_only_general_stats_shooting_hometeam_sot,
+    st.fbref_only_general_stats_shooting_hometeam_sot_percentage,
+    st.fbref_only_general_stats_shooting_hometeam_gsh,
+    st.fbref_only_general_stats_shooting_hometeam_gsot,
+    st.fbref_only_general_stats_shooting_hometeam_pk,
+    st.fbref_only_general_stats_shooting_hometeam_pkatt,
+    st.fbref_only_general_stats_shooting_awayteam_sh,
+    st.fbref_only_general_stats_shooting_awayteam_sot,
+    st.fbref_only_general_stats_shooting_awayteam_sot_percentage,
+    st.fbref_only_general_stats_shooting_awayteam_gsh,
+    st.fbref_only_general_stats_shooting_awayteam_gsot,
+    st.fbref_only_general_stats_shooting_awayteam_pk,
+    st.fbref_only_general_stats_shooting_awayteam_pkatt,
+    st.fbref_match_reports_hometeam_shots_on_target_percentage,
+    st.fbref_match_reports_awayteam_shots_on_target_percentage,
+    st.fbref_match_reports_hometean_shots_not_percentages,
+    st.fbref_match_reports_awayteam_shots_not_percentages
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+
+
+--dim_fouls
+INSERT INTO scottish_premiership.dim_fouls (
+    game_id, 
+    sofa_all_home_fouls	,
+    sofa_all_away_fouls,
+    sofa_all_home_fouled_in_final_third,
+    sofa_all_away_fouled_in_final_third,
+    sofa_first_half_home_fouls,
+    sofa_first_half_away_fouls,
+    sofa_first_half_home_fouled_in_final_third,
+    sofa_first_half_away_fouled_in_final_third,
+    sofa_second_half_home_fouls,
+    sofa_second_half_away_fouls,
+    sofa_second_half_home_fouled_in_final_third,
+    sofa_second_half_away_fouled_in_final_third,
+    fbref_hometeam_fouls,
+    fbref_awayteam_fouls
+)
+SELECT 
+    dg.game_id, 
+    st.sofascore_all_home_fouls	,
+    st.sofascore_all_away_fouls ,
+    st.sofascore_all_home_fouled_in_final_third ,
+    st.sofascore_all_away_fouled_in_final_third ,
+    st.sofascore_first_half_home_fouls ,
+    st.sofascore_first_half_away_fouls ,
+    st.sofascore_first_half_home_fouled_in_final_third ,
+    st.sofascore_first_half_away_fouled_in_final_third ,
+    st.sofascore_second_half_home_fouls ,
+    st.sofascore_second_half_away_fouls ,
+    st.sofascore_second_half_home_fouled_in_final_third ,
+    st.sofascore_second_half_away_fouled_in_final_third ,
+    st.fbref_match_reports_hometeam_fouls ,
+    st.fbref_match_reports_awayteam_fouls
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+--dim_corners
+INSERT INTO scottish_premiership.dim_corners (
+    game_id, 
+    fd_hc,
+    fd_ac,
+    sofa_all_home_corner_kicks,
+    sofa_all_away_corner_kicks,
+    sofa_first_half_home_corner_kicks,
+    sofa_first_half_away_corner_kicks,
+    sofa_second_half_home_corner_kicks,
+    sofa_second_half_away_corner_kicks
+)
+SELECT 
+    dg.game_id, 
+    st.football_data_hc,
+    st.football_data_ac,
+    st.sofascore_all_home_corner_kicks,
+    st.sofascore_all_away_corner_kicks,
+    st.sofascore_first_half_home_corner_kicks,
+    st.sofascore_first_half_away_corner_kicks,
+    st.sofascore_second_half_home_corner_kicks,
+    st.sofascore_second_half_away_corner_kicks
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+--dim teams_form
+INSERT INTO scottish_premiership.dim_teams_form (
+    game_id, 
+    fd_ftr,
+    fd_htr,
+    sofa_hometeam_position,
+    sofa_hometeam_value,
+    sofa_hometeam_eam_form,
+    sofa_awayteam_position,
+    sofa_awayteam_value,
+    sofa_awayteam_form,
+    fbref_hometeam_result,
+    fbref_awayteam_result,
+    fbref_hometeam_form,
+    fbref_awayteam_form
+)
+SELECT 
+    dg.game_id, 
+    st.football_data_ftr,
+    st.football_data_htr,
+    st.sofascore_hometeam_position,
+    st.sofascore_hometeam_value,
+    st.sofascore_hometeam_eam_form,
+    st.sofascore_awayteam_position,
+    st.sofascore_awayteam_value,
+    st.sofascore_awayteam_form,
+    st.fbref_only_general_stats_score_fixtures_hometeam_result,
+    st.fbref_only_general_stats_score_fixtures_awayteam_result,
+    st.fbref_match_reports_hometeam_form,
+    st.fbref_match_reports_awayteam_form
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+--dim goalkeeping
+INSERT INTO scottish_premiership.dim_goalkeeping (
+    game_id, 
+    sofa_all_home_goalkeeper_saves,
+    sofa_all_away_goalkeeper_saves,
+    sofa_all_home_total_saves,
+    sofa_all_away_total_saves,
+    sofa_first_half_home_goalkeeper_saves,
+    sofa_first_half_away_goalkeeper_saves,
+    sofa_first_half_home_total_saves,
+    sofa_first_half_away_total_saves,
+    sofa_second_half_home_goalkeeper_saves,
+    sofa_second_half_away_goalkeeper_saves,
+    sofa_second_half_home_total_saves,
+    sofa_second_half_away_total_saves,
+    fbref_hometeam_saves_percentage,
+    fbref_awayteam_saves_not_percentages,
+    fbref_hometean_saves_not_percentages,
+    fbref_awayteam_saves_percentage
+)
+SELECT 
+    dg.game_id, 
+    st.sofascore_all_home_goalkeeper_saves,
+    st.sofascore_all_away_goalkeeper_saves,
+    st.sofascore_all_home_total_saves,
+    st.sofascore_all_away_total_saves,
+    st.sofascore_first_half_home_goalkeeper_saves,
+    st.sofascore_first_half_away_goalkeeper_saves,
+    st.sofascore_first_half_home_total_saves,
+    st.sofascore_first_half_away_total_saves,
+    st.sofascore_second_half_home_goalkeeper_saves,
+    st.sofascore_second_half_away_goalkeeper_saves,
+    st.sofascore_second_half_home_total_saves,
+    st.sofascore_second_half_away_total_saves,
+    st.fbref_match_reports_hometeam_saves_percentage,
+    st.fbref_match_reports_awayteam_saves_not_percentages,
+    st.fbref_match_reports_hometean_saves_not_percentages,
+    st.fbref_match_reports_awayteam_saves_percentage
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+
+--dim_passing
+INSERT INTO scottish_premiership.dim_passing (
+    game_id, 
+    sofa_all_home_ball_possession,
+    sofa_all_away_ball_possession,
+    sofa_all_home_passes,
+    sofa_all_away_passes,
+    sofa_all_home_through_balls,
+    sofa_all_away_through_balls,
+    sofa_all_home_accurate_passes,
+    sofa_all_away_accurate_passes,
+    sofa_all_home_long_balls,
+    sofa_all_away_long_balls,
+    sofa_all_home_crosses,
+    sofa_all_away_crosses,
+    sofa_first_half_home_ball_possession,	
+    sofa_first_half_away_ball_possession,
+    sofa_first_half_home_passes,
+    sofa_first_half_away_passes,
+    sofa_first_half_home_through_balls,
+    sofa_first_half_away_through_balls,
+    sofa_first_half_home_accurate_passes,
+    sofa_first_half_away_accurate_passes,
+    sofa_first_half_home_long_balls,
+    sofa_first_half_away_long_balls,
+    sofa_first_half_home_crosses,
+    sofa_first_half_away_crosses,
+    sofa_second_half_home_ball_possession,
+    sofa_second_half_away_ball_possession,
+    sofa_second_half_home_passes,
+    sofa_second_half_away_passes,
+    sofa_second_half_home_through_balls,
+    sofa_second_half_away_through_balls,
+    sofa_second_half_home_accurate_passes,
+    sofa_second_half_away_accurate_passes,
+    sofa_second_half_home_long_balls,
+    sofa_second_half_away_long_balls,
+    sofa_second_half_home_crosses,
+    sofa_second_half_away_crosses,
+    fbref_score_fixtures_awayteam_poss,
+    fbref_score_fixtures_hometeam_poss,
+    fbref_hometeam_crosses,
+    fbref_awayteam_crosses,
+    fbref_hometeam_possesion,
+    fbref_awayteam_possesion
+)
+SELECT 
+    dg.game_id, 
+    st.sofascore_all_home_ball_possession, 	
+    st.sofascore_all_away_ball_possession, 
+    st.sofascore_all_home_passes, 
+    st.sofascore_all_away_passes, 
+    st.sofascore_all_home_through_balls, 
+    st.sofascore_all_away_through_balls, 
+    st.sofascore_all_home_accurate_passes, 
+    st.sofascore_all_away_accurate_passes, 
+    st.sofascore_all_home_long_balls, 
+    st.sofascore_all_away_long_balls, 
+    st.sofascore_all_home_crosses, 
+    st.sofascore_all_away_crosses, 
+    st.sofascore_first_half_home_ball_possession, 	
+    st.sofascore_first_half_away_ball_possession, 
+    st.sofascore_first_half_home_passes, 
+    st.sofascore_first_half_away_passes, 
+    st.sofascore_first_half_home_through_balls, 
+    st.sofascore_first_half_away_through_balls, 
+    st.sofascore_first_half_home_accurate_passes, 
+    st.sofascore_first_half_away_accurate_passes, 
+    st.sofascore_first_half_home_long_balls, 
+    st.sofascore_first_half_away_long_balls, 
+    st.sofascore_first_half_home_crosses, 
+    st.sofascore_first_half_away_crosses, 
+    st.sofascore_second_half_home_ball_possession, 
+    st.sofascore_second_half_away_ball_possession, 
+    st.sofascore_second_half_home_passes, 
+    st.sofascore_second_half_away_passes, 
+    st.ofascore_second_half_home_through_balls, 
+    st.sofascore_second_half_away_through_balls, 
+    st.sofascore_second_half_home_accurate_passes, 
+    st.sofascore_second_half_away_accurate_passes, 
+    st.sofascore_second_half_home_long_balls, 
+    st.sofascore_second_half_away_long_balls, 
+    st.sofascore_second_half_home_crosses, 
+    st.sofascore_second_half_away_crosses, 
+    st.fbref_only_general_stats_score_fixtures_awayteam_poss, 
+    st.fbref_only_general_stats_score_fixtures_hometeam_poss, 
+    st.fbref_match_reports_hometeam_crosses, 
+    st.fbref_match_reports_awayteam_crosses, 
+    st.fbref_match_reports_hometeam_possesion, 
+    st.fbref_match_reports_awayteam_possesion
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+
+
+
+
+
+
+
+
+
+		
+	
+
+
+[2024-10-02T18:55:30.436+0000] {base.py:84} INFO - Using connection ID 'football_scotland_connection' for task execution.
+[2024-10-02T18:55:30.462+0000] {base.py:84} INFO - Using connection ID 'football_scotland_connection' for task execution.
+[2024-10-02T18:55:30.469+0000] {sql.py:487} INFO - Running statement: INSERT INTO scottish_premiership.dim_general_info (
+    game_date,
+    fd_time ,
+    hometeam ,
+    awayteam ,
+    fd_fthg ,
+    fd_ftag ,
+    fd_hthg ,
+    fd_htag ,
+    fd_ftr ,
+    fd_htr ,
+    fd_tournament_season ,
+    sofa_tournament_name ,
+    sofa_tournament_country ,
+    sofa_tournament_name_season ,
+    sofa_tournament_season ,
+    sofa_tournament_round ,
+    fbref_time ,
+    fbref_comp ,
+    fbref_round ,
+    fbref_day ,
+    fbref_attendance ,
+    fbref_full_season_format ,
+    fbref_shortened_season ,
+    fbref_match_report_url ,
+    fbref_game_venue_epoch ,
+    fbref_game_venue_time ,
+    fbref_stadium_name ,
+    german_import_time 
+)
+SELECT 
+    game_date ,
+    football_data_time ,
+    hometeam ,
+    football_data_awayteam ,
+    football_data_fthg ,
+    football_data_ftag ,
+    football_data_hthg ,
+    football_data_htag ,
+    football_data_ftr ,
+    football_data_htr ,
+    football_data_tournament_season ,
+    sofascore_tournament_name ,
+    sofascore_tournament_country ,
+    sofascore_tournament_name_season ,
+    sofascore_tournament_season ,
+    sofascore_tournament_round ,
+    fbref_only_general_stats_time ,
+    fbref_only_general_stats_comp ,
+    fbref_only_general_stats_round ,
+    fbref_only_general_stats_day ,
+    fbref_only_general_stats_score_fixtures_hometeam_attendance,
+    fbref_only_general_stats_full_season_format ,
+    fbref_only_general_stats_shortened_season ,
+    fbref_match_reports_match_report_url ,
+    fbref_match_reports_game_venue_epoch ,
+    fbref_match_reports_game_venue_time ,
+    fbref_match_reports_stadium_name ,
+    german_import_time 
+FROM scottish_premiership.staging_table_fl
+ON CONFLICT (game_date, hometeam) DO NOTHING;  -- Prevents duplicate inserts based on game_date and hometeam
+
+
+
+--dim referees
+INSERT INTO scottish_premiership.dim_referees (
+    game_id , 
+    fd_referee ,
+    sofa_referee_name ,
+    sofa_referee_yellow_cards ,
+    sofa_referee_redcards ,
+    sofa_referee_yellowredcards ,	
+    sofa_referee_games	,
+    sofa_referee_country ,
+    fbref_gs_referee ,--general stats
+    fbref_referee	,
+    fbref_ar_first	,
+    fbref_ar_second	,
+    fbref_fourth_official 
+)
+SELECT 
+    dg.game_id, 
+    st.football_data_referee, 
+    st.sofascore_referee_name, 
+    st.sofascore_referee_yellow_cards, 
+    st.sofascore_referee_redcards, 
+    st.sofascore_referee_yellowredcards, 
+    st.sofascore_referee_games, 
+    st.sofascore_referee_country, 
+    st.fbref_only_general_stats_referee,
+    st.fbref_match_reports_referee,
+    st.fbref_match_reports_ar1,
+    st.fbref_match_reports_ar2,
+    st.fbref_match_reports_fourth_official   
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;  -- Prevents inserting duplicate statistics for the same game_id
+
+
+--dim_managers
+INSERT INTO scottish_premiership.dim_managers (
+    game_id, 
+    sofa_home_manager_name, 
+    sofa_home_manager_slug,	
+    sofa_away_manager_name,	
+    sofa_away_manager_slug,
+    fbref_hometeam_manager,	
+    fbref_awayteam_manager
+)
+SELECT 
+    dg.game_id, 
+    st.sofascore_home_manager_name, 
+    st.sofascore_home_manager_slug,	
+    st.sofascore_away_manager_name,	
+    st.sofascore_away_manager_slug,
+    st.fbref_match_reports_hometeam_manager,	
+    st.fbref_match_reports_awayteam_manager
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+
+--dim_betting_odds
+INSERT INTO scottish_premiership.dim_betting_odds (
+    game_id, 
+    fd_b365h, 
+    fd_b365d,	
+    fd_b365a,	
+    fd_bwh,
+    fd_bwd,	
+    fd_bwa
+)
+SELECT 
+    dg.game_id, 
+    st.football_data_b365h, 
+    st.football_data_b365d,	
+    st.football_data_b365a,	
+    st.football_data_bwh,
+    st.football_data_bwd,	
+    st.football_data_bwa
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+
+--dim_shots
+INSERT INTO scottish_premiership.dim_shots (
+    game_id, 
+    fd_hs, 
+    fd_as,	
+    fd_hst,	
+    fd_ast,
+    sofa_all_home_total_shots,	
+    sofa_all_away_total_shots,
+    sofa_all_home_shots_on_target,
+    sofa_all_away_shots_on_target,
+    sofa_all_home_hit_woodwork	,
+    sofa_all_away_hit_woodwork	,
+    sofa_all_home_shots_off_target	,
+    sofa_all_away_shots_off_target	,
+    sofa_all_home_blocked_shots	,
+    sofa_all_away_blocked_shots,
+    sofa_all_home_shots_inside_box,
+    sofa_all_away_shots_inside_box,
+    sofa_all_home_shots_outside_box,
+    sofa_all_away_shots_outside_box,
+    sofa_first_half_home_total_shots,
+    sofa_first_half_away_total_shots,
+    sofa_first_half_home_shots_on_target,
+    sofa_first_half_away_shots_on_target,
+    sofa_first_half_home_hit_woodwork,
+    sofa_first_half_away_hit_woodwork,
+    sofa_first_half_home_shots_off_target,
+    sofa_first_half_away_shots_off_target,
+    sofa_first_half_home_blocked_shots,
+    sofa_first_half_away_blocked_shots,
+    sofa_first_half_home_shots_inside_box,
+    sofa_first_half_away_shots_inside_box,
+    sofa_first_half_home_shots_outside_box,
+    sofa_first_half_away_shots_outside_box,
+    sofa_second_half_home_total_shots,
+    sofa_second_half_away_total_shots,
+    sofa_second_half_home_shots_on_target,
+    sofa_second_half_away_shots_on_target,
+    sofa_second_half_home_hit_woodwork,
+    sofa_second_half_away_hit_woodwork,
+    sofa_second_half_home_shots_off_target,
+    sofa_second_half_away_shots_off_target,
+    sofa_second_half_home_blocked_shots,
+    sofa_second_half_away_blocked_shots,
+    sofa_second_half_home_shots_inside_box,
+    sofa_second_half_away_shots_inside_box,
+    sofa_second_half_home_shots_outside_box,
+    sofa_second_half_away_shots_outside_box,
+    fbref_hometeam_sh,
+    fbref_hometeam_sot,
+    fbref_hometeam_sot_percentage,
+    fbref_hometeam_gsh,
+    fbref_hometeam_gsot,
+    fbref_hometeam_pk,
+    fbref_hometeam_pkatt,
+    fbref_awayteam_sh,
+    fbref_awayteam_sot,
+    fbref_awayteam_sot_percentage,
+    fbref_awayteam_gsh,
+    fbref_awayteam_gsot,
+    fbref_awayteam_pk,
+    fbref_awayteam_pkatt,
+    fbref_hometeam_shots_on_target_percentage,
+    fbref_awayteam_shots_on_target_percentage,
+    fbref_hometean_shots_not_percentages,
+    fbref_awayteam_shots_not_percentages
+)
+SELECT 
+    dg.game_id, 
+    st.football_data_hs, 
+    st.football_data_as,	
+    st.football_data_hst,	
+    st.football_data_ast,
+    st.sofascore_all_home_total_shots,	
+    st.sofascore_all_away_total_shots,
+    st.sofascore_all_home_shots_on_target,
+    st.sofascore_all_away_shots_on_target,
+    st.sofascore_all_home_hit_woodwork	,
+    st.sofascore_all_away_hit_woodwork	,
+    st.sofascore_all_home_shots_off_target,	
+    st.sofascore_all_away_shots_off_target,	
+    st.sofascore_all_home_blocked_shots	,
+    st.sofascore_all_away_blocked_shots,
+    st.sofascore_all_home_shots_inside_box,
+    st.sofascore_all_away_shots_inside_box,
+    st.sofascore_all_home_shots_outside_box,
+    st.sofascore_all_away_shots_outside_box,
+    st.sofascore_first_half_home_total_shots,
+    st.sofascore_first_half_away_total_shots,
+    st.sofascore_first_half_home_shots_on_target,
+    st.sofascore_first_half_away_shots_on_target,
+    st.sofascore_first_half_home_hit_woodwork,
+    st.sofascore_first_half_away_hit_woodwork,
+    st.sofascore_first_half_home_shots_off_target,
+    st.sofascore_first_half_away_shots_off_target,
+    st.sofascore_first_half_home_blocked_shots,
+    st.sofascore_first_half_away_blocked_shots,
+    st.sofascore_first_half_home_shots_inside_box,
+    st.sofascore_first_half_away_shots_inside_box,
+    st.sofascore_first_half_home_shots_outside_box,
+    st.sofascore_first_half_away_shots_outside_box,
+    st.sofascore_second_half_home_total_shots,
+    st.sofascore_second_half_away_total_shots,
+    st.sofascore_second_half_home_shots_on_target,
+    st.sofascore_second_half_away_shots_on_target,
+    st.sofascore_second_half_home_hit_woodwork,
+    st.sofascore_second_half_away_hit_woodwork,
+    st.sofascore_second_half_home_shots_off_target,
+    st.sofascore_second_half_away_shots_off_target,
+    st.sofascore_second_half_home_blocked_shots,
+    st.sofascore_second_half_away_blocked_shots,
+    st.sofascore_second_half_home_shots_inside_box,
+    st.sofascore_second_half_away_shots_inside_box,
+    st.sofascore_second_half_home_shots_outside_box,
+    st.sofascore_second_half_away_shots_outside_box,
+    st.fbref_only_general_stats_shooting_hometeam_sh,
+    st.fbref_only_general_stats_shooting_hometeam_sot,
+    st.fbref_only_general_stats_shooting_hometeam_sot_percentage,
+    st.fbref_only_general_stats_shooting_hometeam_gsh,
+    st.fbref_only_general_stats_shooting_hometeam_gsot,
+    st.fbref_only_general_stats_shooting_hometeam_pk,
+    st.fbref_only_general_stats_shooting_hometeam_pkatt,
+    st.fbref_only_general_stats_shooting_awayteam_sh,
+    st.fbref_only_general_stats_shooting_awayteam_sot,
+    st.fbref_only_general_stats_shooting_awayteam_sot_percentage,
+    st.fbref_only_general_stats_shooting_awayteam_gsh,
+    st.fbref_only_general_stats_shooting_awayteam_gsot,
+    st.fbref_only_general_stats_shooting_awayteam_pk,
+    st.fbref_only_general_stats_shooting_awayteam_pkatt,
+    st.fbref_match_reports_hometeam_shots_on_target_percentage,
+    st.fbref_match_reports_awayteam_shots_on_target_percentage,
+    st.fbref_match_reports_hometean_shots_not_percentages,
+    st.fbref_match_reports_awayteam_shots_not_percentages
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+
+
+--dim_fouls
+INSERT INTO scottish_premiership.dim_fouls (
+    game_id, 
+    sofa_all_home_fouls	,
+    sofa_all_away_fouls,
+    sofa_all_home_fouled_in_final_third,
+    sofa_all_away_fouled_in_final_third,
+    sofa_first_half_home_fouls,
+    sofa_first_half_away_fouls,
+    sofa_first_half_home_fouled_in_final_third,
+    sofa_first_half_away_fouled_in_final_third,
+    sofa_second_half_home_fouls,
+    sofa_second_half_away_fouls,
+    sofa_second_half_home_fouled_in_final_third,
+    sofa_second_half_away_fouled_in_final_third,
+    fbref_hometeam_fouls,
+    fbref_awayteam_fouls
+)
+SELECT 
+    dg.game_id, 
+    st.sofascore_all_home_fouls	,
+    st.sofascore_all_away_fouls ,
+    st.sofascore_all_home_fouled_in_final_third ,
+    st.sofascore_all_away_fouled_in_final_third ,
+    st.sofascore_first_half_home_fouls ,
+    st.sofascore_first_half_away_fouls ,
+    st.sofascore_first_half_home_fouled_in_final_third ,
+    st.sofascore_first_half_away_fouled_in_final_third ,
+    st.sofascore_second_half_home_fouls ,
+    st.sofascore_second_half_away_fouls ,
+    st.sofascore_second_half_home_fouled_in_final_third ,
+    st.sofascore_second_half_away_fouled_in_final_third ,
+    st.fbref_match_reports_hometeam_fouls ,
+    st.fbref_match_reports_awayteam_fouls
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+--dim_corners
+INSERT INTO scottish_premiership.dim_corners (
+    game_id, 
+    fd_hc,
+    fd_ac,
+    sofa_all_home_corner_kicks,
+    sofa_all_away_corner_kicks,
+    sofa_first_half_home_corner_kicks,
+    sofa_first_half_away_corner_kicks,
+    sofa_second_half_home_corner_kicks,
+    sofa_second_half_away_corner_kicks
+)
+SELECT 
+    dg.game_id, 
+    st.football_data_hc,
+    st.football_data_ac,
+    st.sofascore_all_home_corner_kicks,
+    st.sofascore_all_away_corner_kicks,
+    st.sofascore_first_half_home_corner_kicks,
+    st.sofascore_first_half_away_corner_kicks,
+    st.sofascore_second_half_home_corner_kicks,
+    st.sofascore_second_half_away_corner_kicks
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+--dim teams_form
+INSERT INTO scottish_premiership.dim_teams_form (
+    game_id, 
+    fd_ftr,
+    fd_htr,
+    sofa_hometeam_position,
+    sofa_hometeam_value,
+    sofa_hometeam_eam_form,
+    sofa_awayteam_position,
+    sofa_awayteam_value,
+    sofa_awayteam_form,
+    fbref_hometeam_result,
+    fbref_awayteam_result,
+    fbref_hometeam_form,
+    fbref_awayteam_form
+)
+SELECT 
+    dg.game_id, 
+    st.football_data_ftr,
+    st.football_data_htr,
+    st.sofascore_hometeam_position,
+    st.sofascore_hometeam_value,
+    st.sofascore_hometeam_eam_form,
+    st.sofascore_awayteam_position,
+    st.sofascore_awayteam_value,
+    st.sofascore_awayteam_form,
+    st.fbref_only_general_stats_score_fixtures_hometeam_result,
+    st.fbref_only_general_stats_score_fixtures_awayteam_result,
+    st.fbref_match_reports_hometeam_form,
+    st.fbref_match_reports_awayteam_form
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+--dim goalkeeping
+INSERT INTO scottish_premiership.dim_goalkeeping (
+    game_id, 
+    sofa_all_home_goalkeeper_saves,
+    sofa_all_away_goalkeeper_saves,
+    sofa_all_home_total_saves,
+    sofa_all_away_total_saves,
+    sofa_first_half_home_goalkeeper_saves,
+    sofa_first_half_away_goalkeeper_saves,
+    sofa_first_half_home_total_saves,
+    sofa_first_half_away_total_saves,
+    sofa_second_half_home_goalkeeper_saves,
+    sofa_second_half_away_goalkeeper_saves,
+    sofa_second_half_home_total_saves,
+    sofa_second_half_away_total_saves,
+    fbref_hometeam_saves_percentage,
+    fbref_awayteam_saves_not_percentages,
+    fbref_hometean_saves_not_percentages,
+    fbref_awayteam_saves_percentage
+)
+SELECT 
+    dg.game_id, 
+    st.sofascore_all_home_goalkeeper_saves,
+    st.sofascore_all_away_goalkeeper_saves,
+    st.sofascore_all_home_total_saves,
+    st.sofascore_all_away_total_saves,
+    st.sofascore_first_half_home_goalkeeper_saves,
+    st.sofascore_first_half_away_goalkeeper_saves,
+    st.sofascore_first_half_home_total_saves,
+    st.sofascore_first_half_away_total_saves,
+    st.sofascore_second_half_home_goalkeeper_saves,
+    st.sofascore_second_half_away_goalkeeper_saves,
+    st.sofascore_second_half_home_total_saves,
+    st.sofascore_second_half_away_total_saves,
+    st.fbref_match_reports_hometeam_saves_percentage,
+    st.fbref_match_reports_awayteam_saves_not_percentages,
+    st.fbref_match_reports_hometean_saves_not_percentages,
+    st.fbref_match_reports_awayteam_saves_percentage
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+
+--dim_passing
+INSERT INTO scottish_premiership.dim_passing (
+    game_id, 
+    sofa_all_home_ball_possession,
+    sofa_all_away_ball_possession,
+    sofa_all_home_passes,
+    sofa_all_away_passes,
+    sofa_all_home_through_balls,
+    sofa_all_away_through_balls,
+    sofa_all_home_accurate_passes,
+    sofa_all_away_accurate_passes,
+    sofa_all_home_long_balls,
+    sofa_all_away_long_balls,
+    sofa_all_home_crosses,
+    sofa_all_away_crosses,
+    sofa_first_half_home_ball_possession,	
+    sofa_first_half_away_ball_possession,
+    sofa_first_half_home_passes,
+    sofa_first_half_away_passes,
+    sofa_first_half_home_through_balls,
+    sofa_first_half_away_through_balls,
+    sofa_first_half_home_accurate_passes,
+    sofa_first_half_away_accurate_passes,
+    sofa_first_half_home_long_balls,
+    sofa_first_half_away_long_balls,
+    sofa_first_half_home_crosses,
+    sofa_first_half_away_crosses,
+    sofa_second_half_home_ball_possession,
+    sofa_second_half_away_ball_possession,
+    sofa_second_half_home_passes,
+    sofa_second_half_away_passes,
+    sofa_second_half_home_through_balls,
+    sofa_second_half_away_through_balls,
+    sofa_second_half_home_accurate_passes,
+    sofa_second_half_away_accurate_passes,
+    sofa_second_half_home_long_balls,
+    sofa_second_half_away_long_balls,
+    sofa_second_half_home_crosses,
+    sofa_second_half_away_crosses,
+    fbref_score_fixtures_awayteam_poss,
+    fbref_score_fixtures_hometeam_poss,
+    fbref_hometeam_crosses,
+    fbref_awayteam_crosses,
+    fbref_hometeam_possesion,
+    fbref_awayteam_possesion
+)
+SELECT 
+    dg.game_id, 
+    st.sofascore_all_home_ball_possession, 	
+    st.sofascore_all_away_ball_possession, 
+    st.sofascore_all_home_passes, 
+    st.sofascore_all_away_passes, 
+    st.sofascore_all_home_through_balls, 
+    st.sofascore_all_away_through_balls, 
+    st.sofascore_all_home_accurate_passes, 
+    st.sofascore_all_away_accurate_passes, 
+    st.sofascore_all_home_long_balls, 
+    st.sofascore_all_away_long_balls, 
+    st.sofascore_all_home_crosses, 
+    st.sofascore_all_away_crosses, 
+    st.sofascore_first_half_home_ball_possession, 	
+    st.sofascore_first_half_away_ball_possession, 
+    st.sofascore_first_half_home_passes, 
+    st.sofascore_first_half_away_passes, 
+    st.sofascore_first_half_home_through_balls, 
+    st.sofascore_first_half_away_through_balls, 
+    st.sofascore_first_half_home_accurate_passes, 
+    st.sofascore_first_half_away_accurate_passes, 
+    st.sofascore_first_half_home_long_balls, 
+    st.sofascore_first_half_away_long_balls, 
+    st.sofascore_first_half_home_crosses, 
+    st.sofascore_first_half_away_crosses, 
+    st.sofascore_second_half_home_ball_possession, 
+    st.sofascore_second_half_away_ball_possession, 
+    st.sofascore_second_half_home_passes, 
+    st.sofascore_second_half_away_passes, 
+    st.ofascore_second_half_home_through_balls, 
+    st.sofascore_second_half_away_through_balls, 
+    st.sofascore_second_half_home_accurate_passes, 
+    st.sofascore_second_half_away_accurate_passes, 
+    st.sofascore_second_half_home_long_balls, 
+    st.sofascore_second_half_away_long_balls, 
+    st.sofascore_second_half_home_crosses, 
+    st.sofascore_second_half_away_crosses, 
+    st.fbref_only_general_stats_score_fixtures_awayteam_poss, 
+    st.fbref_only_general_stats_score_fixtures_hometeam_poss, 
+    st.fbref_match_reports_hometeam_crosses, 
+    st.fbref_match_reports_awayteam_crosses, 
+    st.fbref_match_reports_hometeam_possesion, 
+    st.fbref_match_reports_awayteam_possesion
+FROM 
+    scottish_premiership.staging_table_fl st
+JOIN 
+    scottish_premiership.dim_general_info dg 
+ON 
+    st.game_date = dg.game_date AND st.hometeam = dg.hometeam
+ON CONFLICT (game_id) DO NOTHING;
+
+
+
+
+
+
+
+
+
+
+		
+	
+
+, parameters: None
+[2024-10-02T18:55:57.095+0000] {taskinstance.py:441} INFO - ::group::Post task execution logs
+[2024-10-02T18:55:57.096+0000] {taskinstance.py:2905} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 465, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 432, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 401, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/common/sql/operators/sql.py", line 282, in execute
+    output = hook.run(
+             ^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/common/sql/hooks/sql.py", line 435, in run
+    self._run_command(cur, sql_statement, parameters)
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/common/sql/hooks/sql.py", line 492, in _run_command
+    cur.execute(sql_statement)
+psycopg2.errors.UndefinedColumn: column st.ofascore_second_half_home_through_balls does not exist
+LINE 535:     st.ofascore_second_half_home_through_balls, 
+              ^
+HINT:  Perhaps you meant to reference the column "st.sofascore_second_half_home_through_balls".
+
+[2024-10-02T18:55:57.108+0000] {taskinstance.py:1206} INFO - Marking task as UP_FOR_RETRY. dag_id=intialization_database, task_id=data_insert_dim_tables_fl, run_id=manual__2024-10-02T18:53:54.511300+00:00, execution_date=20241002T185354, start_date=20241002T185530, end_date=20241002T185557
+[2024-10-02T18:55:57.144+0000] {standard_task_runner.py:110} ERROR - Failed to execute job 3434 for task data_insert_dim_tables_fl (column st.ofascore_second_half_home_through_balls does not exist
+LINE 535:     st.ofascore_second_half_home_through_balls, 
+              ^
+HINT:  Perhaps you meant to reference the column "st.sofascore_second_half_home_through_balls".
+; 9302)
+[2024-10-02T18:55:57.165+0000] {local_task_job_runner.py:240} INFO - Task exited with return code 1
+[2024-10-02T18:55:57.183+0000] {taskinstance.py:3503} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-10-02T18:55:57.186+0000] {local_task_job_runner.py:222} INFO - ::endgroup::
