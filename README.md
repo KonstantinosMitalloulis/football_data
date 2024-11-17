@@ -19,6 +19,25 @@ Orchestrierung: Apache Airflow
 Containerisierung: Docker
 Visualisierung: Metabase
 
+PROJECT STILL IN PROGRESS
+
+Hello!
+
+The goal of this project is to build a Data Warehouse that collects football data from three different sources (websites).
+All services used (Postgres, Airflow, Metabase, pgAdmin) are integrated via Docker Compose, meaning they run in separate Docker containers.
+
+Tasks are orchestrated using Airflow. There are two DAGs:
+
+Initialization: Responsible for the initial population of the Data Warehouse.
+Update: Enables the regular updating of data.
+Both DAGs must be started manually.
+
+Technologies used:
+
+Programming language: Python
+Database: PostgreSQL
+Orchestration: Apache Airflow
+Containerization: Docker
+Visualization: Metabase
+
 Konstantinos Mitalloulis
-
-
